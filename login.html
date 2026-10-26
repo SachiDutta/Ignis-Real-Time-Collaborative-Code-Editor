@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Background stars */
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 2px #7baaff;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+/* 16 stars around the screen */
+.star:nth-child(1)  { top: 8%; left: 8%; }
+.star:nth-child(2)  { top: 18%; left: 25%; animation-delay: 1s; }
+.star:nth-child(3)  { top: 5%; left: 48%; }
+.star:nth-child(4)  { top: 15%; right: 12%; animation-delay: 2s; }
+.star:nth-child(5)  { top: 35%; right: 5%; }
+.star:nth-child(6)  { top: 55%; right: 10%; animation-delay: 1.5s; }
+.star:nth-child(7)  { top: 78%; right: 7%; }
+.star:nth-child(8)  { bottom: 6%; right: 28%; animation-delay: 2s; }
+.star:nth-child(9)  { bottom: 12%; left: 45%; }
+.star:nth-child(10) { bottom: 5%; left: 15%; animation-delay: 1s; }
+.star:nth-child(11) { bottom: 25%; left: 5%; }
+.star:nth-child(12) { top: 45%; left: 8%; animation-delay: 2s; }
+.star:nth-child(13) { top: 28%; left: 17%; }
+.star:nth-child(14) { top: 72%; left: 24%; animation-delay: 1.5s; }
+.star:nth-child(15) { top: 30%; right: 22%; }
+.star:nth-child(16) { bottom: 30%; right: 20%; animation-delay: 2s; }
+
+.star:nth-child(3n) {
+    width: 4px;
+    height: 4px;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* Login card */
+.container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 850px;
+    max-width: 100%;
+    background: #101010;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.photo {
+    width: 50%;
+    min-height: 500px;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form {
+    width: 50%;
+    padding: 45px 35px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+p {
+    color: #999;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin: 16px 0 8px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    background: #080808;
+    border: 1px solid #383838;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4d8dff;
+}
+
+.error {
+    color: #ff6262;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 22px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4d8dff;
+    color: white;
+}
+
+.switch {
+    margin-top: 22px;
+    font-size: 14px;
+    text-align: center;
+}
+
+a {
+    color: #75a7ff;
+    text-decoration: none;
+}
+
+@media (max-width: 650px) {
+    .photo {
+        display: none;
+    }
+
+    .form {
+        width: 100%;
+        padding: 35px 25px;
+    }
+}
+
+.form-error {
+    display: none;
+    margin-top: 16px;
+    padding: 10px 12px;
+    background: rgba(255, 98, 98, 0.1);
+    border: 1px solid rgba(255, 98, 98, 0.4);
+    border-radius: 6px;
+    color: #ff8a8a;
+    font-size: 13px;
+}
+
+.form-error.show {
+    display: block;
+}
+
+input.invalid {
+    border-color: #ff6262;
+}
+
+.hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #777;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    background: white;
+    color: black;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Decorative stars -->
+<div class="stars" aria-hidden="true">
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+    <span class="star"></span><span class="star"></span>
+</div>
+
+<div class="container">
+    <div class="photo">
+        <img src="img/login.jpeg" alt="Login photo">
+    </div>
+
+    <div class="form">
+        <h1>Welcome Back</h1>
+        <p>Login to your account</p>
+
+        <form id="loginForm" novalidate>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" autocomplete="email">
+            <div class="error" id="emailError"></div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+            <div class="error" id="passwordError"></div>
+
+            <div class="form-error" id="formError" role="alert"></div>
+
+            <button type="submit" id="submitBtn">Login</button>
+        </form>
+
+        <div class="switch">
+            Don't have an account?
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+// Already signed in? Go straight to the home page.
+if (Auth.user()) {
+    location.replace("index.html");
+}
+
+const form = document.getElementById("loginForm");
+const formError = document.getElementById("formError");
+const submitBtn = document.getElementById("submitBtn");
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const fields = {
+    email: { input: document.getElementById("email"), error: document.getElementById("emailError") },
+    password: { input: document.getElementById("password"), error: document.getElementById("passwordError") }
+};
+
+function setFieldError(name, message) {
+    fields[name].error.textContent = message || "";
+    fields[name].input.classList.toggle("invalid", !!message);
+}
+
+function clearErrors() {
+    Object.keys(fields).forEach(n => setFieldError(n, ""));
+    formError.classList.remove("show");
+    formError.textContent = "";
+}
+
+Object.keys(fields).forEach(n => {
+    fields[n].input.addEventListener("input", () => setFieldError(n, ""));
+});
+
+form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearErrors();
+
+    const email = fields.email.input.value.trim();
+    const password = fields.password.input.value;
+
+    let valid = true;
+
+    if (email === "") {
+        setFieldError("email", "Email is required.");
+        valid = false;
+    } else if (!emailPattern.test(email)) {
+        setFieldError("email", "Enter a valid email.");
+        valid = false;
+    }
+
+    if (password === "") {
+        setFieldError("password", "Password is required.");
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Logging in...";
+
+    try {
+        await Auth.login({ email, password });
+        location.href = "index.html";
+    } catch (err) {
+        Object.keys(err.fields || {}).forEach(n => { if (fields[n]) setFieldError(n, err.fields[n]); });
+        if (!Object.keys(err.fields || {}).length) {
+            formError.textContent = err.message;
+            formError.classList.add("show");
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login";
+    }
+});
+</script>
+
+</body>
+</html>
